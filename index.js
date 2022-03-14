@@ -1,6 +1,7 @@
 const { default: axios } = require('axios');
 const { app, screen, BrowserWindow } = require('electron');
 const express = require('express');
+const {GlobalKeyboardListener}  = require("node-global-key-listener");
 
 const eapp = express();
 const server = require('http').createServer(eapp);
@@ -95,6 +96,25 @@ io.on('connection', (connection) => {
             win.webContents.send('RANGE_ENTER', payload)
         }
     })
+});
+
+const v = new GlobalKeyboardListener();
+v.addListener(function (e, down) {
+    if (e.state == "DOWN" && e.name == "LEFT META") {
+        if(win !== null) {
+            console.log("Move Start")
+            win.setIgnoreMouseEvents(false);
+            return true;
+        }
+    }
+    if (e.state == "UP" && e.name == "LEFT META") {
+        if(win !== null) {
+            console.log("Move End")
+            win.setIgnoreMouseEvents(true);
+            return true;
+        }
+    }
+    return false;
 });
 
 server.listen(9019, () => {

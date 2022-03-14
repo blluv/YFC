@@ -24,6 +24,7 @@
   "dependencies": {
     "axios": "^0.26.1",
     "express": "^4.17.3",
+    "node-global-key-listener": "^0.0.13",
     "sirv-cli": "^2.0.0"
   }
 }

@@ -1,16 +1,14 @@
 <script>
-	let captions = ["안녕하세요오"];
+	let captions = [];
 	const { ipcRenderer } = require('electron');
 
 	ipcRenderer.on("LOAD", (event, payload) => {
-		console.log(payload)
-		// captions = payload.events.map(e=>e.segs.map(e=>e.utf8).join(" "))
 	})
 	ipcRenderer.on("UNLOAD", (event, payload) => {
 		captions = []
 	})
 	ipcRenderer.on("RANGE_ENTER", (event, payload) => {
-		captions = [payload.j[0].text]
+		captions = [payload.text ? payload.text : payload.j.map(e=>e.text).join(" ")]
 	})
 </script>
 
